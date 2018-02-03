@@ -1,0 +1,28 @@
+abuild: Add alpine-v3.7-main repository
+
+From: Rajiv M Ranganath <rajiv.ranganath@atihita.com>
+
+
+---
+ abuild |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/abuild b/abuild
+index 4dff217..24f6b4c 100755
+--- a/abuild
++++ b/abuild
+@@ -2277,12 +2277,13 @@ deps() {
+ 	local _quiet="$1"
+ 	[ -z "$_quiet" ] && msg "Installing for build:$builddeps"
+ 	$SUDO_APK add $_quiet $apk_opt_wait --repository "$REPODEST/$repo" \
++		--repository http://dl-cdn.alpinelinux.org/alpine/v3.7/main \
+ 		--virtual .makedepends-$pkgname \
+ 		$builddeps \
+ 		|| return 1
+ 	if [ -n "$CBUILDROOT" ]; then
+ 		[ -z "$_quiet" ] && msg "Installing for host:$hostdeps"
+-		$SUDO_APK add $_quiet --root "$CBUILDROOT" --arch "$CTARGET_ARCH" --repository "$REPODEST/$repo" $apk_opt_wait \
++		$SUDO_APK add $_quiet --root "$CBUILDROOT" --arch "$CTARGET_ARCH" --repository "$REPODEST/$repo" --repository http://dl-cdn.alpinelinux.org/alpine/v3.7/main $apk_opt_wait \
+ 			--no-scripts --virtual .makedepends-$pkgname $hostdeps || return 1
+ 	fi
+ }
